@@ -1,0 +1,16 @@
+- name: Cloning .dotfiles
+  ansible.builtin.git:
+    repo: 'git@github.com:zinek/config_manager.git'
+    dest: "{{ lookup('env', 'HOME') }}/SynologyDrive/config_manager"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: master
+  tags:
+    - install
+    - dotfiles
+- name: Setup links
+  shell: cd $HOME/SynologyDrive/config_manager/config_files && ./symbolic_links.sh
+  tags:
+    - install
+    - dotfiles
